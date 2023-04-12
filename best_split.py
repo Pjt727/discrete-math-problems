@@ -7,7 +7,7 @@ def powerset(iterable):
     return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
 # This is a brute force algorithm which generates all possible combinations of the nums in nums.
-#   - I think the complexity of this algorithm is O(n * 2^n) for generating the poset and adding all the subsets
+#   - I think the complexity of this algorithm is O(n * 2^n) for generating the powset and adding all the subsets
 # This is already a little wasteful because we do not really need to consider a subset if we already considered
 #   the subset which forms a partition with the considered subset...
 #   For instance if the original nums is {1,2,3} then two subsets would be {1} and {2, 3},
@@ -18,13 +18,12 @@ def powerset(iterable):
 #   Therefore, we might be able to change the time complexity to O( n*2^(n-1) )
 # Finally, there might be a greedy solution which preforms better
 def split_to_minimize_difference( nums: list[int]) -> tuple[tuple[int], tuple[int]]:
-    poset: list[list[int]] = powerset(nums)
-    target: int = sum(school_counts) // 2
+    powset: list[list[int]] = powerset(nums)
+    target: int = sum(nums) // 2
     best_subset_score: float = float('inf') #we want to minimize score
     best_subset: tuple[int] = ()
-    
-    # finding minimum subset
-    for subset in poset:
+
+    for subset in powset:
         score = abs(sum(subset) - target)
         if score < best_subset_score:
             best_subset_score = score
